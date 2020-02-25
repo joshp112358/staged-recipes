@@ -1,0 +1,56 @@
+{% set name = "libsemigroups_cppyy" %}
+{% set version = "0.0.1" %}
+{% set sha256 = "04525f662468dae77b110df851250d9228525aad0f5d384ab5c34167bc90f8e8" %}
+{% set home = "https://libsemigroups.readthedocs.io/en/latest/" %}
+{% set repo = "https://github.com/libsemigroups/libsemigroups_cppyy" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: {{ repo }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+  skip: true # [win]
+  skip: true # [py<35]
+  script: "{{ PYTHON }} -m pip install . -vv"
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - python
+    - pip
+    - libsemigroups >= 1.0.5
+    - networkx
+  run:
+    - python
+    - libsemigroups >= 1.0.5
+
+test:
+  imports:
+    - libsemigroups >= 1.0.5
+    - networkx
+
+about:
+  home: {{ home }}
+  license: GPL-3.0
+  license_family: LICENSE
+  license_file: LICENSE
+  summary: 'Python wrappings for libsemigroups'
+
+  description: |
+    libsemigroups_cppyy provides python wrappings
+    for the C++ library libsemigroups
+  doc_url: {{ home }}
+  dev_url: {{ repo }}
+
+extra:
+  recipe-maintainers:
+     - james-d-mitchell
+     - nthiery
+     - joshp112358
